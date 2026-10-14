@@ -2,7 +2,7 @@
 ## Sistema único de saúde (Unified Health System)
 
 Projeto criado pela computer society vinculado ao ramo estudantil do IFFluminense - Campos Centro que visa unificar, otimizar e armazenar os atendimentos da enfermaria do campus Centro.
-Membros: Angela, Asafe, Julia e Elias
+## Membros: Angela, Asafe, Julia e Elias
 
 Tecnologias utilizadas:
 <p align="left">
