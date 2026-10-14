@@ -1,4 +1,4 @@
-# SUA 
+# SUA (Sistema Unificado de Atendimento)
 
 Projeto criado pela **Computer Society**, vinculada ao ramo estudantil do **IFFluminense - Campos Centro**, que visa unificar, otimizar e armazenar os atendimentos da enfermaria do campus Centro.
 
