@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Pacientes · SUA{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">Pacientes</h1>
+        <a href="{% url 'pacientes:novo' %}" class="btn btn-success">+ Novo paciente</a>
+    </div>
+
+    <form method="get" class="row g-2 mb-4">
+        <div class="col">
+            <input type="search" name="q" value="{{ busca }}" class="form-control"
+                   placeholder="Buscar por nome ou CPF">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-outline-success">Buscar</button>
+            {% if busca %}<a href="{% url 'pacientes:lista' %}" class="btn btn-outline-secondary">Limpar</a>{% endif %}
+        </div>
+    </form>
+
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Vínculo</th>
+                <th>CPF</th>
+                <th class="text-end">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in pacientes %}
+                <tr>
+                    <td><a href="{% url 'pacientes:detalhe' p.pk %}">{{ p.nome }}</a></td>
+                    <td>
+                        {% if p.aluno %}<span class="badge text-bg-primary">Aluno</span>{% endif %}
+                        {% if p.servidor %}<span class="badge text-bg-success">Servidor</span>{% endif %}
+                        {% if p.visitante %}<span class="badge text-bg-secondary">Visitante</span>{% endif %}
+                    </td>
+                    <td>{{ p.cpf|default:"—" }}</td>
+                    <td class="text-end">
+                        <a href="{% url 'atendimentos:novo' p.pk %}" class="btn btn-sm btn-success">+ Novo atendimento</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4" class="text-muted">Nenhum paciente encontrado.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
