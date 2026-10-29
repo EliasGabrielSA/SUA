@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}{{ paciente.nome }} · SUA{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-start mb-4">
+        <div>
+            <h1 class="h3 mb-1">{{ paciente.nome }}</h1>
+            <div>
+                {% if paciente.aluno %}<span class="badge text-bg-primary">Aluno</span>{% endif %}
+                {% if paciente.servidor %}<span class="badge text-bg-success">Servidor</span>{% endif %}
+                {% if paciente.visitante %}<span class="badge text-bg-secondary">Visitante</span>{% endif %}
+            </div>
+        </div>
+        <a href="{% url 'atendimentos:novo' paciente.pk %}" class="btn btn-success">+ Novo atendimento</a>    
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">Dados do paciente</div>
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-3">CPF</dt>
+                <dd class="col-sm-9">{{ paciente.cpf|default:"não informado" }}</dd>
+
+                <dt class="col-sm-3">Data de nascimento</dt>
+                <dd class="col-sm-9">{{ paciente.data_nascimento|date:"d/m/Y"|default:"não informada" }}</dd>
+
+                <dt class="col-sm-3">Gênero</dt>
+                <dd class="col-sm-9">{{ paciente.get_genero_display|default:"não informado" }}</dd>
+
+                <dt class="col-sm-3">E-mail</dt>
+                <dd class="col-sm-9">{{ paciente.email|default:"não informado" }}</dd>
+
+                <dt class="col-sm-3">Celular</dt>
+                <dd class="col-sm-9">{{ paciente.celular|default:"não informado" }}</dd>
+            </dl>
+        </div>
+    </div>
+
+    <h2 class="h5">Anotações dos profissionais da saúde</h2>
+
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th style="width: 12rem;">Data / horário</th>
+                <th>Anotações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for atendimento in atendimentos %}
+                <tr>
+                    <td>{{ atendimento.data_hora|date:"d/m/Y H:i" }}</td>
+                    <td>{{ atendimento.observacao|linebreaksbr }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="2" class="text-muted">Nenhum atendimento registrado.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

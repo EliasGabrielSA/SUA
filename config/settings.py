@@ -1,4 +1,6 @@
 import os
+from django.contrib.messages import constants as messages
+
 
 """
 Django settings for config project.
@@ -30,6 +32,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+MESSAGE_TAGS = {messages.ERROR: 'danger'}
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'pacientes',
+    'atendimentos',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +62,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

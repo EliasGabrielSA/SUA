@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Teste · SUA{% endblock %}
+
+{% block content %}
+    <h1 class="h3">Template funcionando</h1>
+    <p>Olá, {{ nome }}!</p>
+
+    <ul class="list-group">
+        {% for item in itens %}
+            <li class="list-group-item">{{ item }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

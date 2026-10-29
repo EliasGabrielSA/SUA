@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Novo paciente · SUA{% endblock %}
+
+{% block content %}
+    <h1 class="h3 mb-4">Novo paciente</h1>
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        <div class="card mb-4">
+            <div class="card-header">Dados do paciente</div>
+            <div class="card-body">
+                {% include "pacientes/_campos.html" with form=form %}
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">Vínculo com o instituto</div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="vinculo" class="form-label">Vínculo</label>
+                    <select name="vinculo" id="vinculo" class="form-select">
+                        <option value="">---------</option>
+                        <option value="aluno" {% if vinculo == "aluno" %}selected{% endif %}>Aluno</option>
+                        <option value="servidor" {% if vinculo == "servidor" %}selected{% endif %}>Servidor</option>
+                        <option value="visitante" {% if vinculo == "visitante" %}selected{% endif %}>Visitante</option>
+                    </select>
+                    {% if erro_vinculo %}
+                        <div class="text-danger small">{{ erro_vinculo }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="bloco-vinculo" id="vinculo-aluno" hidden>
+                    {% include "pacientes/_campos.html" with form=forms_vinculo.aluno %}
+                </div>
+                <div class="bloco-vinculo" id="vinculo-servidor" hidden>
+                    {% include "pacientes/_campos.html" with form=forms_vinculo.servidor %}
+                </div>
+                <div class="bloco-vinculo" id="vinculo-visitante" hidden>
+                    {% include "pacientes/_campos.html" with form=forms_vinculo.visitante %}
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <a href="/" class="btn btn-outline-secondary">Cancelar</a>
+    </form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const select = document.getElementById("vinculo");
+    const blocos = document.querySelectorAll(".bloco-vinculo");
+
+    function mostrarVinculo() {
+        blocos.forEach(b => b.hidden = b.id !== "vinculo-" + select.value);
+    }
+
+    select.addEventListener("change", mostrarVinculo);
+    mostrarVinculo();  // roda ao carregar, para manter o bloco certo quando o form volta com erro
+</script>
+{% endblock %}
